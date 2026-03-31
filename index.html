@@ -563,11 +563,9 @@ footer{
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-
 window.submitForm = async (event) => {
     if (event) event.preventDefault();
 
-    // 1. سحب البيانات مع حماية (لو الخانة مش موجودة ميهنجش)
     const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value.trim() : "";
 
     const name = getVal('f-name');
@@ -575,17 +573,16 @@ window.submitForm = async (event) => {
     const email = getVal('f-email') || "غير مسجل";
     const branch = getVal('f-branch');
     const service = getVal('f-service') || "عام";
+    const date = getVal('f-date') || "لم يحدد";
+    const time = getVal('f-time') || "لم يحدد";
     const notes = getVal('f-notes') || "لا يوجد";
 
-    // 2. التنبيه (زي إنشاء الحساب)
     if(!name || !phone || !branch) {
-        alert('⚠️ خطأ: يجب كتابة الاسم ورقم الهاتف واختيار الفرع!');
+        alert('⚠️ خطأ: يرجى كتابة الاسم ورقم الهاتف واختيار الفرع!');
         return;
     }
 
     try {
-        console.log("جاري إرسال البيانات...");
-        // 3. الإرسال لـ Firebase
         await addDoc(collection(db, "appointments"), {
             patientName: name,
             patientPhone: phone,
@@ -595,11 +592,10 @@ window.submitForm = async (event) => {
             prefDate: date,
             prefTime: time,
             notes: notes,
-            status: "pending", // فكرتك اللي اتفقنا عليها
+            status: "pending",
             createdAt: serverTimestamp()
         });
 
-        // 4. الرياكشن (التأكيد)
         alert("✅ تم استلام طلبك بنجاح! سيتم مراجعته من قبل الإدارة.");
         window.location.reload();
 
