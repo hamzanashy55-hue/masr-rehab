@@ -3,77 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | Masr Rehab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>Admin Access | Masr Rehab</title>
     <style>
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(rgba(45, 106, 79, 0.7), rgba(45, 106, 79, 0.7)), 
-                        url('https://images.unsplash.com/photo-1576091160550-2173dbc9982a?auto=format&fit=crop&q=80');
+            /* تعديل الخلفية برابط مباشر وصورة أوضح */
+            background: linear-gradient(rgba(27, 67, 50, 0.85), rgba(27, 67, 50, 0.85)), 
+                        url('https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-        .login-box {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            padding: 40px;
-            border-radius: 25px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
             text-align: center;
-            width: 350px;
+            width: 100%;
+            max-width: 400px;
             color: white;
         }
-        h2 { margin-bottom: 30px; font-weight: 700; letter-spacing: 1px; }
+
+        h2 { margin-bottom: 35px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; }
+
         input {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 20px;
+            padding: 15px;
+            margin-bottom: 25px;
             border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.9);
-            box-sizing: border-box;
-            outline: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.95);
             font-size: 16px;
-        }
-        button {
-            background: #d8f3dc;
+            outline: none;
             color: #1b4332;
+            transition: 0.3s;
+        }
+
+        input:focus { box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); }
+
+        button {
+            background: #95d5b2;
+            color: #081c15;
             border: none;
-            padding: 12px 25px;
-            border-radius: 12px;
+            padding: 15px;
+            border-radius: 15px;
             cursor: pointer;
             width: 100%;
             font-size: 18px;
-            font-weight: bold;
-            transition: 0.3s;
+            font-weight: 700;
+            transition: 0.4s;
+            text-transform: uppercase;
         }
-        button:hover { background: #b7e4c7; transform: translateY(-3px); }
+
+        button:hover { background: #d8f3dc; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
     </style>
 </head>
 <body>
-    <div class="login-box">
-        <h2>Admin </h2>
-        <input type="password" id="pass" placeholder="Enter Password">
-        <button onclick="check()">Login</button>
-    </div>
 
-    <script>
-        function check() {
-            var p = document.getElementById('pass').value;
-            // السطر اللي جاي ده هو سطر الباسورد (رقم 70 تقريباً في الملف الجديد)
-            if(p === "hamza") { 
-                alert("Access Granted! Opening Dashboard...");
-                window.location.href = "dashboard.html"; 
-            } else {
-                alert("Access Denied! Incorrect Password.");
-            }
+<div class="login-card">
+    <h2>Admin Access</h2>
+    <input type="password" id="passInput" placeholder="Enter Admin Password">
+    <button onclick="checkLogin()">Login</button>
+</div>
+
+<script>
+    function checkLogin() {
+        const p = document.getElementById('passInput').value;
+        // السطر اللي بتغير منه الباسورد (السطر 71)
+        if (p === "hamza") {
+            alert("Success! Welcome back, Hamza.");
+            window.location.href = "dashboard.html"; 
+        } else {
+            alert("Access Denied! Wrong Password.");
+            document.getElementById('passInput').value = ""; // بيمسح اللي كتبته عشان تعيد صح
         }
-    </script>
+    }
+
+    // الكود السحري بتاع الـ Enter
+    document.getElementById('passInput').addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // بيمنع أي لغبطة في المتصفح
+            checkLogin(); // بينفذ الدخول فوراً
+        }
+    });
+</script>
+
 </body>
 </html>
