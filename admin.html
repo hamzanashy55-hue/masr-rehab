@@ -2,84 +2,28 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>لوحة بيانات المرضى | Masr Rehab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <title>دخول الإدارة | Masr Rehab</title>
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #f0f4f8; padding: 30px; margin: 0; }
-        .admin-container { max-width: 1200px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #eef2f7; padding-bottom: 20px; }
-        h1 { color: #1b4332; margin: 0; font-weight: 900; font-size: 24px; }
-        .btn-logout { background: #ff4d4d; color: white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; text-decoration: none; }
-        
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: white; }
-        th { background: #1b4332; color: white; padding: 15px; text-align: right; font-size: 14px; }
-        td { padding: 15px; border-bottom: 1px solid #edf2f7; color: #4a5568; font-size: 14px; }
-        tr:hover { background: #f8fafc; }
-        .status-tag { background: #d8f3dc; color: #1b4332; padding: 4px 12px; border-radius: 20px; font-weight: bold; font-size: 12px; }
-        .phone-link { color: #2d6a4f; text-decoration: none; font-weight: bold; }
+        body { background: linear-gradient(rgba(27,67,50,0.8), rgba(27,67,50,0.8)), url('https://images.pexels.com/photos/4021775/pexels-photo-4021775.jpeg?auto=compress'); background-size: cover; height: 100vh; display: flex; justify-content: center; align-items: center; margin: 0; font-family: 'Segoe UI', sans-serif; }
+        .login-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); padding: 40px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.2); text-align: center; color: white; width: 100%; max-width: 350px; }
+        input { width: 100%; padding: 12px; margin: 20px 0; border-radius: 10px; border: none; outline: none; }
+        button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #95d5b2; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-
-<div class="admin-container">
-    <div class="header">
-        <h1>📋 سجل الحجوزات السحابي</h1>
-        <a href="index.html" class="btn-logout">تسجيل الخروج</a>
+    <div class="login-card">
+        <h2>Admin Access</h2>
+        <input type="password" id="passInput" placeholder="أدخل كلمة المرور">
+        <button onclick="checkLogin()">دخول</button>
     </div>
-
-    <table id="appointmentsTable">
-        <thead>
-            <tr>
-                <th>اسم المريض</th>
-                <th>رقم الهاتف</th>
-                <th>الفرع</th>
-                <th>التخصص</th>
-                <th>تاريخ الحجز</th>
-            </tr>
-        </thead>
-        <tbody id="tableBody">
-            </tbody>
-    </table>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
-        authDomain: "masr-rehab.firebaseapp.com",
-        projectId: "masr-rehab",
-        storageBucket: "masr-rehab.firebasestorage.app",
-        messagingSenderId: "803513512222",
-        appId: "1:803513512222:web:430fcb908eba84e92c190f"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    // سحب البيانات لحظياً (Real-time)
-    const q = query(collection(db, "appointments"), orderBy("createdAt", "desc"));
-    
-    onSnapshot(q, (snapshot) => {
-        let tableRows = "";
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            const date = data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleString('ar-EG') : "جاري التحميل...";
-            
-            tableRows += `
-                <tr>
-                    <td><strong>${data.patientName}</strong></td>
-                    <td><a href="tel:${data.patientPhone}" class="phone-link">${data.patientPhone}</a></td>
-                    <td><span class="status-tag">${data.branch}</span></td>
-                    <td>${data.service || "عام"}</td>
-                    <td>${date}</td>
-                </tr>
-            `;
-        });
-        document.getElementById('tableBody').innerHTML = tableRows;
-    });
-</script>
-
+    <script>
+        function checkLogin() {
+            if (document.getElementById('passInput').value === "hamza") {
+                sessionStorage.setItem("admin_access", "true"); // الختم السري
+                window.location.href = "dashboard.html";
+            } else { alert("كلمة المرور خاطئة!"); }
+        }
+        document.getElementById('passInput').addEventListener("keypress", (e) => { if(e.key === "Enter") checkLogin(); });
+    </script>
 </body>
 </html>
