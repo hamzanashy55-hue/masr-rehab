@@ -3,161 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masr Rehab Center | Appointment Booking</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    
+    <title>Masr Rehab | Physical Therapy Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #27ae60;
-            --bg: #f8f9fa;
-            --text: #333;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            color: var(--text);
-            line-height: 1.6;
-        }
-
+        :root { --primary: #2c3e50; --secondary: #27ae60; --light: #f8f9fa; }
+        body { font-family: 'Poppins', sans-serif; margin: 0; color: var(--primary); scroll-behavior: smooth; }
+        
         /* Navbar */
-        #navbar {
-            background: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 8%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .nav-logo { display: flex; align-items: center; text-decoration: none; color: var(--primary); }
-        .nav-logo-icon svg { width: 30px; fill: var(--secondary); margin-right: 10px; }
-        .nav-brand b { font-size: 1.4rem; letter-spacing: 1px; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: white; box-shadow: 0 2px 15px rgba(0,0,0,0.1); sticky top: 0; z-index: 1000; }
+        .logo { display: flex; align-items: center; font-weight: 700; font-size: 1.5rem; color: var(--primary); text-decoration: none; }
+        .nav-links { list-style: none; display: flex; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--primary); font-weight: 500; transition: 0.3s; }
+        .nav-links a:hover { color: var(--secondary); }
 
-        /* Booking Section */
-        #booking { padding: 80px 5%; display: flex; justify-content: center; }
-        #booking-form {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
-            width: 100%;
-            max-width: 550px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .form-header { text-align: center; margin-bottom: 10px; }
-        .form-header h2 { color: var(--primary); margin: 0; }
-        .form-header p { color: #7f8c8d; font-size: 0.9rem; }
+        /* Hero / Header Section */
+        header { height: 80vh; background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; text-align: center; color: white; }
+        .hero-content h1 { font-size: 3.5rem; margin-bottom: 10px; }
+        
+        /* Services Section */
+        .section { padding: 80px 8%; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .card { padding: 30px; background: var(--light); border-radius: 15px; transition: 0.3s; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
 
-        input, select, textarea {
-            padding: 14px;
-            border: 1px solid #e0e0e0;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.95rem;
-            outline: none;
-            transition: 0.3s;
-        }
-        input:focus, select:focus, textarea:focus { border-color: var(--secondary); box-shadow: 0 0 0 3px rgba(39, 174, 96, 0.1); }
+        /* Booking Form */
+        #booking-form { max-width: 600px; margin: 0 auto; background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; flex-direction: column; gap: 15px; }
+        input, select, textarea { padding: 12px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; }
+        button { padding: 15px; background: var(--secondary); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 1rem; transition: 0.3s; }
+        button:hover { background: #219150; }
 
-        button {
-            padding: 16px;
-            background: var(--secondary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: 0.4s;
-            margin-top: 10px;
-        }
-        button:hover { background: #219150; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(39, 174, 96, 0.3); }
-
-        /* Toast Notification */
-        #toast {
-            visibility: hidden;
-            min-width: 300px;
-            background-color: #27ae60;
-            color: white;
-            text-align: center;
-            border-radius: 12px;
-            padding: 20px;
-            position: fixed;
-            z-index: 1001;
-            left: 50%;
-            bottom: 40px;
-            transform: translateX(-50%);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
+        /* Animations */
+        .r { opacity: 0; transform: translateY(30px); transition: 0.8s; }
+        .r.show { opacity: 1; transform: translateY(0); }
+        #toast { visibility: hidden; min-width: 250px; background: var(--secondary); color: white; text-align: center; border-radius: 8px; padding: 16px; position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 2000; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
-
-        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 40px; opacity: 1;} }
-        @keyframes fadeout { from {bottom: 40px; opacity: 1;} to {bottom: 0; opacity: 0;} }
-
-        /* Animation */
-        .reveal { opacity: 0; transform: translateY(20px); transition: 0.6s ease-out; }
-        .reveal.show { opacity: 1; transform: translateY(0); }
+        @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
+        @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
     </style>
 </head>
 <body>
 
-    <nav id="navbar">
-        <a class="nav-logo" href="admin.html">
-            <div class="nav-logo-icon">
-                <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-            </div>
-            <div class="nav-brand"><b>MASR REHAB</b></div>
-        </a>
+    <nav>
+        <a href="#" class="logo">MASR REHAB</a>
+        <ul class="nav-links">
+            <li><a href="#services">Services</a></li>
+            <li><a href="#why">Why Us</a></li>
+            <li><a href="#team">Team</a></li>
+            <li><a href="#booking">Book Now</a></li>
+        </ul>
     </nav>
 
-    <section id="booking" class="reveal">
+    <header>
+        <div class="hero-content r">
+            <h1>Expert Care for Your Recovery</h1>
+            <p>Advanced Physical Therapy & Rehabilitation Center</p>
+        </div>
+    </header>
+
+    <section id="services" class="section r">
+        <h2>Our Services</h2>
+        <div class="grid">
+            <div class="card"><h3>Physical Therapy</h3><p>Comprehensive treatment for musculoskeletal issues.</p></div>
+            <div class="card"><h3>Sports Rehab</h3><p>Specialized programs for athletes and injuries.</p></div>
+            <div class="card"><h3>Neuro Rehab</h3><p>Recovery support for neurological conditions.</p></div>
+        </div>
+    </section>
+
+    <section id="booking" class="section r" style="background: var(--light);">
+        <h2>Secure Your Appointment</h2>
         <form id="booking-form">
-            <div class="form-header">
-                <h2>Book an Appointment</h2>
-                <p>Please fill in your details to secure your visit.</p>
-            </div>
-            
             <input type="text" id="f-name" placeholder="Full Name" required>
             <input type="tel" id="f-phone" placeholder="Phone Number" required>
-            
-            <select id="f-branch" required>
+            <select id="f-branch">
                 <option value="">Select Branch</option>
                 <option value="Cairo">Cairo Branch</option>
                 <option value="Giza">Giza Branch</option>
             </select>
-            
-            <select id="f-service">
-                <option value="">Select Service</option>
-                <option value="Physical Therapy">Physical Therapy</option>
-                <option value="Sports Rehabilitation">Sports Rehabilitation</option>
-                <option value="Injury Recovery">Injury Recovery</option>
-            </select>
-            
-            <div style="display: flex; gap: 10px;">
-                <input type="date" id="f-date" style="flex: 1;">
-                <input type="time" id="f-time" style="flex: 1;">
-            </div>
-            
-            <textarea id="f-notes" rows="3" placeholder="Additional notes or medical condition..."></textarea>
-            
-            <button type="button" onclick="submitForm()">Confirm Appointment</button>
+            <textarea id="f-notes" placeholder="Case Description"></textarea>
+            <button type="button" onclick="submitForm()">Confirm Booking</button>
         </form>
     </section>
 
-    <div id="toast">✅ Appointment requested successfully! We will contact you soon.</div>
+    <div id="toast">✅ Appointment Saved Successfully!</div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Your Firebase Configuration
         const firebaseConfig = {
             apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
             authDomain: "masr-rehab.firebaseapp.com",
@@ -171,50 +103,27 @@
         const db = getFirestore(app);
 
         window.submitForm = async function() {
-            const name = document.getElementById('f-name').value.trim();
-            const phone = document.getElementById('f-phone').value.trim();
-            const branch = document.getElementById('f-branch').value;
-            const service = document.getElementById('f-service').value;
-            const date = document.getElementById('f-date').value;
-            const time = document.getElementById('f-time').value;
-            const notes = document.getElementById('f-notes').value.trim();
-
-            if(!name || !phone || !branch) {
-                alert('Please fill in the required fields (Name, Phone, and Branch).');
-                return;
-            }
-
+            const name = document.getElementById('f-name').value;
+            const phone = document.getElementById('f-phone').value;
+            if(!name || !phone) { alert("Please enter name and phone"); return; }
             try {
                 await addDoc(collection(db, "appointments"), {
                     patientName: name,
                     patientPhone: phone,
-                    branch: branch,
-                    service: service,
-                    bookingDate: date,
-                    bookingTime: time,
-                    notes: notes,
+                    branch: document.getElementById('f-branch').value,
                     createdAt: serverTimestamp()
                 });
-
                 const t = document.getElementById('toast');
                 t.className = "show";
-                setTimeout(() => { t.className = t.className.replace("show", ""); }, 4000);
-
+                setTimeout(() => { t.className = ""; }, 3000);
                 document.getElementById('booking-form').reset();
-
-            } catch (error) {
-                console.error("Submission Error: ", error);
-                alert("An error occurred. Please try again or call us directly.");
-            }
+            } catch (e) { alert("Error connecting to server"); }
         };
 
-        // Scroll animation
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(entry => {
-                if(entry.isIntersecting){ entry.target.classList.add('show'); observer.unobserve(entry.target); }
-            });
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); } });
         }, {threshold: 0.1});
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        document.querySelectorAll('.r').forEach(el => obs.observe(el));
     </script>
 </body>
 </html>
