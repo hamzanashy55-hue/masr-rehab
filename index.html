@@ -730,20 +730,13 @@ footer{
         createdAt: serverTimestamp()
       });
 
-      // إظهار رسالة النجاح (Toast)
-      const t = document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 4000);
-      
-      // مسح البيانات بعد الحجز
-      document.getElementById('f-name').value='';
-      document.getElementById('f-phone').value='';
-      document.getElementById('f-branch').value='';
+    alert("✅ تم استلام طلب حجزك بنجاح! سنتواصل معك قريباً.");
+      window.location.reload()
+    }
     } catch (e) {
       alert("حدث خطأ في الاتصال بالسيرفر");
     }
   };
-
   // 5. الأكواد الأصلية بتاعتك (Nav scroll & Branches & Reveal)
   window.addEventListener('scroll',()=>{
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
@@ -766,7 +759,5 @@ footer{
   }, {threshold: 0.1});
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
-</body>
-</html>
 </body>
 </html>
