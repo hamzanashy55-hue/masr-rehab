@@ -11,6 +11,7 @@
         }
     </script>
     <style>
+        button:hover { transform: scale(1.2); transition: 0.2s; }
         body { font-family: 'Cairo', sans-serif; background: #f0f4f8; padding: 20px; margin: 0; }
         .container { max-width: 1100px; margin: 20px auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
         .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 20px; }
@@ -33,10 +34,10 @@
     <table>
         <thead>
             <tr>
-                <th>المريض</th>
+                <th>المريض (اضغط للتفاصيل)</th>
                 <th>الهاتف</th>
-                <th>الفرع</th>
-                <th>التاريخ</th>
+                <th>الحالة / الفرع</th>
+                <th>التحكم</th>
             </tr>
         </thead>
         <tbody id="data-list">
@@ -46,7 +47,7 @@
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-    import { getFirestore, collection, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
@@ -60,16 +61,51 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // 1. عرض البيانات مع الأزرار الجديدة
     const q = query(collection(db, "appointments"), orderBy("createdAt", "desc"));
     onSnapshot(q, (snap) => {
         let rows = "";
         snap.forEach(doc => {
             const d = doc.data();
+            const id = doc.id;
             const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString('ar-EG') : "...";
-            rows += `<tr><td><b>${d.patientName}</b></td><td>${d.patientPhone}</td><td><span class="branch-tag">${d.branch}</span></td><td>${date}</td></tr>`;
+            
+            // لون الحالة (أصفر للانتظار، أخضر للمقبول)
+            let statusStyle = d.status === 'approved' ? 'background:#d8f3dc; color:#1b4332' : 'background:#fff3cd; color:#856404';
+            let statusText = d.status === 'approved' ? 'تم القبول' : 'قيد الانتظار';
+
+            rows += `
+                <tr>
+                    <td><b style="cursor:pointer; color:#2d6a4f" onclick="showFullDetails('${id}', '${d.patientName}', '${d.patientPhone}', '${d.patientEmail}', '${d.branch}', '${d.service}', '${d.prefDate}', '${d.prefTime}', '${d.notes}')">${d.patientName}</b></td>
+                    <td>${d.patientPhone}</td>
+                    <td><span class="branch-tag" style="${statusStyle}">${statusText}</span></td>
+                    <td>
+                        <button onclick="approveNow('${id}', '${d.patientPhone}', '${d.patientName}', '${d.prefDate}', '${d.prefTime}')" style="border:none; background:none; cursor:pointer; font-size:18px">✅</button>
+                        <button onclick="deleteNow('${id}')" style="border:none; background:none; cursor:pointer; font-size:18px">❌</button>
+                    </td>
+                </tr>`;
         });
         document.getElementById('data-list').innerHTML = rows;
     });
+
+    // 2. وظيفة القبول وفتح واتساب تلقائياً
+    window.approveNow = async (id, phone, name, date, time) => {
+        await updateDoc(doc(db, "appointments", id), { status: "approved" });
+        const message = `أهلاً يا ${name}، تم قبول حجزك في مركز مصر للتأهيل يوم (${date}) الساعة (${time}). برجاء عدم التأخر.`;
+        window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+    };
+
+    // 3. وظيفة الحذف (أنت فقط)
+    window.deleteNow = async (id) => {
+        if(confirm("هل تريد حذف بيانات هذا المريض نهائياً؟")) {
+            await deleteDoc(doc(db, "appointments", id));
+        }
+    };
+
+    // 4. عرض كل "أسرار" المريض لما تدوس على اسمه
+    window.showFullDetails = (id, name, phone, email, branch, service, date, time, notes) => {
+        alert(`📂 ملف المريض بالكامل:\n------------------\nالاسم: ${name}\nالهاتف: ${phone}\nالجيميل: ${email}\nالفرع: ${branch}\nالتخصص: ${service}\nالتاريخ: ${date}\nالوقت: ${time}\nملاحظات: ${notes}`);
+    };
 </script>
 </body>
 </html>
