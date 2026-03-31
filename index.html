@@ -697,71 +697,53 @@ footer{
 </div>
 
 <script type="module">
-  // 1. إعدادات السيرفر (Firebase)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    // 1. إعدادات Firebase
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
-    authDomain: "masr-rehab.firebaseapp.com",
-    projectId: "masr-rehab",
-    storageBucket: "masr-rehab.firebasestorage.app",
-    messagingSenderId: "803513512222",
-    appId: "1:803513512222:web:430fcb908eba84e92c190f"
-  };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
+        authDomain: "masr-rehab.firebaseapp.com",
+        projectId: "masr-rehab",
+        storageBucket: "masr-rehab.firebasestorage.app",
+        messagingSenderId: "803513512222",
+        appId: "1:803513512222:web:430fcb908eba84e92c190f"
+    };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-  // 2. ميزة الـ Enter (لما المريض يدوس Enter يبعت البيانات)
-  document.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-      submitForm();
-    }
-  });
-
-// 4. وظيفة إرسال البيانات لـ Firebase
+    // 2. وظيفة إرسال البيانات المصلحة
     window.submitForm = async function() {
         const nameInput = document.getElementById('f-name');
         const phoneInput = document.getElementById('f-phone');
         const branchInput = document.getElementById('f-branch');
 
-        const name = nameInput.value.trim();
-        const phone = phoneInput.value.trim();
-        const branch = branchInput.value;
-
-        if(!name || !phone || !branch) {
+        if(!nameInput.value || !phoneInput.value || !branchInput.value) {
             alert('⚠️ يا دكتور، لازم الاسم والموبايل والفرع!');
             return;
         }
 
         try {
             await addDoc(collection(db, "appointments"), {
-                patientName: name,
-                patientPhone: phone,
-                branch: branch,
+                patientName: nameInput.value.trim(),
+                patientPhone: phoneInput.value.trim(),
+                branch: branchInput.value,
                 service: document.getElementById('f-service').value || "عام",
                 createdAt: serverTimestamp()
             });
 
-            // إظهار الرسالة (Toast)
             const t = document.getElementById('toast');
             t.classList.add('show');
-            
-            // مسح الخانات
             nameInput.value = '';
             phoneInput.value = '';
-            
-            // إخفاء الرسالة بعد 4 ثواني
             setTimeout(() => { t.classList.remove('show'); }, 4000);
-
         } catch (e) {
-            console.error(e);
-            alert("❌ فشل في الإرسال، تأكد من الإنترنت");
+            alert("❌ فشل في الإرسال");
         }
     };
 
-    // 🎯 السطر اللي هيشغل الزرار اللي إنت عملته في السطر 651
+    // 3. ربط الزرار يدوياً (السطر 651 اللي إنت عملته)
     const btn = document.getElementById('mainBookingBtn');
     if(btn) {
         btn.onclick = function(e) {
@@ -769,6 +751,23 @@ footer{
             submitForm();
         };
     }
+
+    // 4. تشغيل باقي حركات الموقع (Nav & Tabs)
+    window.addEventListener('scroll',()=>{
+        document.getElementById('navbar')?.classList.toggle('scrolled', window.scrollY > 50);
+    });
+    
+    window.showBranch = (id, b) => {
+        document.querySelectorAll('.branch-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+        document.getElementById('branch-' + id)?.classList.add('active');
+        if(b) b.classList.add('active');
+    };
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); }});
+    });
+    document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
 </body>
 </html>
