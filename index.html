@@ -710,20 +710,6 @@ footer{
     }
   });
 
-  // 3. ميزة الباسورد (لما تدوس على اللوجو يطلب hamza)
-  const logo = document.querySelector('.nav-logo');
-  if(logo) {
-    logo.onclick = function(e) {
-      e.preventDefault();
-      const password = prompt("من فضلك أدخل كلمة المرور للدخول لصفحة البيانات:");
-      if (password === "hamza") {
-        window.location.href = "admin.html";
-      } else {
-        alert("كلمة المرور غير صحيحة!");
-      }
-    };
-  }
-
   // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
   window.submitForm = async function() {
     const name = document.getElementById('f-name').value.trim();
