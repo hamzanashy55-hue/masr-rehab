@@ -744,27 +744,6 @@ window.submitForm = async (event) => {
         window.location.reload();
     } catch (e) { alert("خطأ في الاتصال"); }
 };
-
-    try {
-      // 3. الإرسال لـ Firebase
-      await addDoc(collection(db, "appointments"), {
-        patientName: name,
-        patientPhone: phone,
-        branch: branch,
-        service: service,
-        createdAt: serverTimestamp()
-      });
-
-      // 4. الرسالة والريفرش
-      alert("✅ تم استلام طلب حجزك بنجاح!");
-      window.location.reload();
-
-    } catch (e) {
-      console.error(e);
-      alert("حدث خطأ في الاتصال بالسيرفر");
-    }
-  };
-
   // 5. الأكواد الأصلية بتاعتك (Nav scroll & Branches & Reveal)
   window.addEventListener('scroll',()=>{
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
