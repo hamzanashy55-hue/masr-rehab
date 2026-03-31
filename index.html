@@ -711,19 +711,39 @@ footer{
   });
 
   // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
-window.submitForm = async function(event) {
+window.submitForm = async (event) => {
     if (event) event.preventDefault();
-    // 1. سحب البيانات من الخانات
     const name = document.getElementById('f-name').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
+    const email = document.getElementById('f-email').value.trim() || "غير مسجل";
     const branch = document.getElementById('f-branch').value;
     const service = document.getElementById('f-service').value || "عام";
+    const date = document.getElementById('f-date').value || "غير محدد";
+    const time = document.getElementById('f-time').value || "غير محدد";
+    const notes = document.getElementById('f-notes').value.trim() || "لا يوجد";
 
-    // 2. التأكد إن الخانات مش فاضية
     if(!name || !phone || !branch) {
-      alert('⚠️ من فضلك اكتب الاسم ورقم الهاتف واختر الفرع');
-      return;
+        alert('⚠️ الاسم والموبايل والفرع حقول إجبارية!');
+        return;
     }
+
+    try {
+        await addDoc(collection(db, "appointments"), {
+            patientName: name,
+            patientPhone: phone,
+            patientEmail: email,
+            branch: branch,
+            service: service,
+            prefDate: date,
+            prefTime: time,
+            notes: notes,
+            status: "pending", // الحالة الافتراضية
+            createdAt: serverTimestamp()
+        });
+        alert("✅ تم إرسال طلبك للإدارة.. ستصلك رسالة بالتأكيد فور القبول.");
+        window.location.reload();
+    } catch (e) { alert("خطأ في الاتصال"); }
+};
 
     try {
       // 3. الإرسال لـ Firebase
