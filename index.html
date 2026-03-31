@@ -1,186 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en"> <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Masrrehab | Excellence in Neuro-Rehab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Masr Rehab Group | Neuro & Pediatric Rehabilitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
     <style>
+        /* أنا حافظت على نفس ألوان وتنسيقات Claude اللي في الصور */
         :root {
-            --primary-green: #5a8a66;
-            --soft-beige: #f9f8f3;
-            --dark-green: #2d3e30;
-            --white: #ffffff;
-            --card-bg: #f2f1eb;
+            --sage: #5a8c5f; --sage-light: #a8c8a4; --cream: #f8f4ed;
+            --dark: #252820; --white: #ffffff; --text: #353830;
         }
+        * { margin:0; padding:0; box-sizing:border-box; font-family: 'Poppins', sans-serif; }
+        body { background: var(--cream); color: var(--text); direction: ltr; text-align: left; }
+
+        /* Navbar Customization for Admin Access */
+        nav {
+            position:fixed; top:0; left:0; right:0; z-index:1000;
+            padding:1rem 5rem; display:flex; align-items:center; justify-content:space-between;
+            background:rgba(248,244,237,0.95); backdrop-filter:blur(14px);
+            border-bottom:1px solid rgba(90,140,95,0.12);
+        }
+        .logo { display:flex; align-items:center; gap:.75rem; cursor: pointer; text-decoration: none; color: inherit; }
+        .logo-emblem { width:44px; height:44px; background:var(--sage); border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.3rem; }
         
-        body { font-family: 'Poppins', sans-serif; margin: 0; background-color: var(--soft-beige); color: var(--dark-green); overflow-x: hidden; }
-
-        /* Navbar (Based on your Screenshot) */
-        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000; }
-        .logo-container { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; }
-        .logo-img { width: 40px; height: 40px; background: #96d6a5; border-radius: 12px; display: flex; align-items: center; justify-content: center; }
-        .logo-text { font-weight: 700; color: var(--dark-green); font-size: 1.2rem; }
-        .nav-links { list-style: none; display: flex; gap: 20px; font-size: 0.9rem; }
-        .nav-links a { text-decoration: none; color: var(--dark-green); font-weight: 500; }
-        .btn-book { background: var(--primary-green); color: white; padding: 10px 20px; border-radius: 25px; text-decoration: none; font-weight: 600; }
-
         /* Hero Section */
-        .hero { display: flex; align-items: center; padding: 60px 8%; min-height: 80vh; position: relative; }
-        .hero-text { flex: 1; z-index: 2; }
-        .hero-text h1 { font-size: 3.5rem; line-height: 1.2; margin-bottom: 20px; }
-        .hero-text p { font-size: 1.1rem; color: #555; max-width: 500px; }
-        .hero-image { flex: 1; position: relative; }
-        .hero-circle { width: 500px; height: 500px; background: #e2efde; border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; position: absolute; right: -50px; top: -100px; z-index: 1; }
+        .hero { min-height:100vh; display:grid; grid-template-columns: 1fr 1fr; align-items:center; padding:8rem 5rem; }
+        .hero-title { font-size: 3.5rem; font-weight: 900; color: var(--dark); line-height: 1.2; }
+        .hero-title span { color: var(--sage); font-style: italic; }
 
-        /* Stats Bar */
-        .stats { display: flex; justify-content: space-around; padding: 40px 8%; background: var(--white); text-align: center; }
-        .stat-item h3 { font-size: 2rem; margin: 0; color: var(--primary-green); }
-
-        /* Sections */
-        .section-title { text-align: center; margin-bottom: 50px; }
-        .section-title h2 { font-size: 2.5rem; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 0 8%; }
-        .card { background: var(--card-bg); padding: 40px; border-radius: 25px; transition: 0.3s; }
-        .card:hover { transform: translateY(-10px); background: var(--white); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-
-        /* Form (Fixed Enter Key) */
-        .booking-form { max-width: 700px; margin: 50px auto; background: var(--white); padding: 40px; border-radius: 30px; box-shadow: 0 15px 50px rgba(0,0,0,0.05); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        input, select, textarea { width: 100%; padding: 15px; border: none; background: #f7f7f2; border-radius: 12px; box-sizing: border-box; font-family: inherit; }
-        .full-width { grid-column: span 2; }
-        .submit-btn { width: 100%; padding: 18px; background: var(--primary-green); color: white; border: none; border-radius: 15px; cursor: pointer; font-size: 1.1rem; font-weight: 600; margin-top: 20px; }
+        /* Booking Form Styles */
+        .book-form {
+            background: var(--white); padding: 2.5rem; border-radius: 26px;
+            box-shadow: 0 12px 44px rgba(0,0,0,0.08);
+            display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+        }
+        .fg { display:flex; flex-direction:column; gap:.4rem; text-align: left; }
+        .fg.full { grid-column: span 2; }
+        input, select, textarea {
+            padding:.8rem; border:1.5px solid #eee; border-radius:12px; background: var(--cream);
+        }
+        .form-submit {
+            grid-column: span 2; background: var(--sage); color: white; padding: 1rem;
+            border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .form-submit:hover { background: var(--dark); }
 
         /* Toast */
-        #toast { visibility: hidden; min-width: 250px; background: var(--primary-green); color: white; text-align: center; border-radius: 10px; padding: 16px; position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 2000; }
+        #toast { visibility: hidden; min-width: 250px; background: var(--sage); color: white; text-align: center; border-radius: 10px; padding: 16px; position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%); z-index: 2000; }
         #toast.show { visibility: visible; animation: fadein 0.5s, fadeout 0.5s 2.5s; }
         @keyframes fadein { from {bottom: 0; opacity: 0;} to {bottom: 30px; opacity: 1;} }
         @keyframes fadeout { from {bottom: 30px; opacity: 1;} to {bottom: 0; opacity: 0;} }
+        
+        /* Sections reveal */
+        .r { opacity:0; transform:translateY(24px); transition: 0.6s all ease; }
+        .r.v { opacity:1; transform:translateY(0); }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo-container" onclick="adminAccess()">
-            <div class="logo-img">🧠</div>
-            <div class="logo-text">MASR REHAB</div>
+<nav>
+    <div class="logo" onclick="checkAdmin()">
+        <div class="logo-emblem">🧠</div>
+        <div class="logo-text-wrap">
+            <div class="logo-name" style="font-weight:900;">MASR <span>REHAB</span></div>
+            <div style="font-size:.7rem; color: #777;">Neuro & Pediatric Rehab Group</div>
         </div>
-        <ul class="nav-links">
-            <li><a href="#services">Services</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#doctors">Doctors</a></li>
-            <li><a href="#branches">Branches</a></li>
-        </ul>
-        <a href="#booking" class="btn-book">Book Now</a>
-    </nav>
+    </div>
+    <ul style="display:flex; gap:2rem; list-style:none;">
+        <li><a href="#services" style="text-decoration:none; color:var(--text);">Services</a></li>
+        <li><a href="#branches" style="text-decoration:none; color:var(--text);">Branches</a></li>
+        <li><a href="#booking" style="background:var(--sage); color:white; padding:.5rem 1rem; border-radius:50px; text-decoration:none;">Book Now</a></li>
+    </ul>
+</nav>
 
-    <header class="hero">
-        <div class="hero-text">
-            <span style="background: #e2efde; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem;">Certified Since 2008</span>
-            <h1>Restoring Life to Every Nerve</h1>
-            <p>Specialized rehabilitation for children and adults in a scientific, warm environment.</p>
-            <div style="margin-top: 30px;">
-                <a href="#booking" class="btn-book" style="padding: 15px 40px;">Start Your Journey</a>
+<section class="hero">
+    <div class="hero-content">
+        <div style="background:var(--sage-light); display:inline-block; padding:5px 15px; border-radius:50px; font-size:.8rem; margin-bottom:1rem;">Certified Since 2008</div>
+        <h1 class="hero-title">Restoring Life <br><span>To Every Nerve</span></h1>
+        <p style="margin: 20px 0; color: #666; line-height: 1.8;">Leading center for neuro-rehabilitation and pediatric therapy in Egypt, Libya, Algeria, and KSA.</p>
+        <a href="#booking" class="form-submit" style="text-decoration:none; display:inline-block; width:auto; padding: 1rem 2.5rem;">📅 Get Started</a>
+    </div>
+    <div style="text-align:right;">
+        <div style="width:100%; height:400px; background:var(--sage-light); border-radius:30% 70% 70% 30% / 30% 30% 70% 70%; opacity:0.3;"></div>
+    </div>
+</section>
+
+<section id="booking" style="padding: 5rem;">
+    <div style="max-width:800px; margin:0 auto; text-align:center;">
+        <h2 style="font-size:2.5rem; margin-bottom:1rem;">Online Booking</h2>
+        <p style="margin-bottom:2rem; color:#777;">Fill the form below and we will contact you within 2 hours.</p>
+        
+        <form class="book-form" id="bookingForm">
+            <div class="fg">
+                <label>Patient Name</label>
+                <input type="text" id="p_name" placeholder="Full Name" required>
             </div>
-        </div>
-        <div class="hero-image">
-            <div class="hero-circle"></div>
+            <div class="fg">
+                <label>Phone Number</label>
+                <input type="tel" id="p_phone" placeholder="01x xxxx xxxx" required>
             </div>
-    </header>
+            <div class="fg">
+                <label>Branch</label>
+                <select id="p_branch">
+                    <option value="Cairo-Hossary">Egypt - October (Hossary)</option>
+                    <option value="Libya">Libya - Gharyan</option>
+                    <option value="Algeria">Algeria - Oued Souf</option>
+                    <option value="KSA">Saudi Arabia - Dammam</option>
+                </select>
+            </div>
+            <div class="fg">
+                <label>Patient Age</label>
+                <input type="text" id="p_age" placeholder="e.g. 7 years">
+            </div>
+            <div class="fg full">
+                <label>Condition Description</label>
+                <textarea id="p_desc" rows="3" placeholder="Briefly describe the medical condition..."></textarea>
+            </div>
+            <button type="button" class="form-submit" onclick="saveToFirebase()">📩 Submit Appointment</button>
+        </form>
+    </div>
+</section>
 
-    <section id="services" class="section">
-        <div class="section-title">
-            <h2>Comprehensive Treatment Programs</h2>
-            <p>Over 8 specialties in Neuro and Pediatric rehab</p>
-        </div>
-        <div class="grid">
-            <div class="card"><h3>Neuro Rehab</h3><p>Complete programs for stroke recovery and spinal cord injuries.</p></div>
-            <div class="card"><h3>Pediatric Rehab</h3><p>Specialized care for CP, Autism, and motor delays.</p></div>
-            <div class="card"><h3>Speech Therapy</h3><p>Expert sessions for speech and swallowing disorders.</p></div>
-        </div>
-    </section>
+<div id="toast">✅ Appointment Saved Successfully!</div>
 
-    <section id="booking" class="section">
-        <div class="booking-form">
-            <h2 style="text-align: center;">Book Your Appointment</h2>
-            <form id="main-form">
-                <div class="form-grid">
-                    <input type="text" id="p-name" placeholder="Patient Name" required>
-                    <input type="tel" id="p-phone" placeholder="Phone Number" required>
-                    <select id="p-branch" required>
-                        <option value="">Select Branch</option>
-                        <option value="Cairo">Egypt - Cairo</option>
-                        <option value="Libya">Libya - Gharyan</option>
-                        <option value="Algeria">Algeria</option>
-                    </select>
-                    <input type="text" id="p-case" placeholder="Condition (e.g. Stroke)">
-                    <textarea id="p-desc" class="full-width" rows="4" placeholder="Brief description of the case..."></textarea>
-                </div>
-                <button type="button" onclick="handleBooking()" class="submit-btn">Send Request 📩</button>
-            </form>
-        </div>
-    </section>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    <div id="toast">✅ Saved! We will contact you soon.</div>
+    const firebaseConfig = {
+        apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
+        authDomain: "masr-rehab.firebaseapp.com",
+        projectId: "masr-rehab",
+        storageBucket: "masr-rehab.firebasestorage.app",
+        messagingSenderId: "803513512222",
+        appId: "1:803513512222:web:430fcb908eba84e92c190f"
+    };
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
-            authDomain: "masr-rehab.firebaseapp.com",
-            projectId: "masr-rehab",
-            storageBucket: "masr-rehab.firebasestorage.app",
-            messagingSenderId: "803513512222",
-            appId: "1:803513512222:web:430fcb908eba84e92c190f"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-
-        // Fixed Enter Key functionality
-        document.getElementById('main-form').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') {
-                e.preventDefault(); // Prevents default refresh
-                handleBooking();
-            }
-        });
-
-        window.handleBooking = async function() {
-            const name = document.getElementById('p-name').value;
-            const phone = document.getElementById('p-phone').value;
-            if(!name || !phone) { alert("Name and Phone are required!"); return; }
-
-            try {
-                await addDoc(collection(db, "appointments"), {
-                    patientName: name,
-                    patientPhone: phone,
-                    branch: document.getElementById('p-branch').value,
-                    condition: document.getElementById('p-case').value,
-                    description: document.getElementById('p-desc').value,
-                    createdAt: serverTimestamp()
-                });
-                showToast();
-                document.getElementById('main-form').reset();
-            } catch (e) { console.error(e); }
-        };
-
-        function showToast() {
-            const t = document.getElementById('toast');
-            t.className = "show";
-            setTimeout(() => { t.className = ""; }, 3000);
+    // حوار الـ Enter اللي طلبته
+    document.getElementById('bookingForm').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            saveToFirebase();
         }
+    });
 
-        // Admin Access via Logo Click
-        window.adminAccess = function() {
-            const pass = prompt("Enter Admin Password:");
-            if(pass === "hamza") {
-                window.location.href = "admin.html";
-            } else {
-                alert("Incorrect Password!");
-            }
-        };
-    </script>
+    window.saveToFirebase = async function() {
+        const name = document.getElementById('p_name').value;
+        const phone = document.getElementById('p_phone').value;
+
+        if(!name || !phone) { alert("Please fill Name and Phone!"); return; }
+
+        try {
+            await addDoc(collection(db, "appointments"), {
+                patientName: name,
+                patientPhone: phone,
+                branch: document.getElementById('p_branch').value,
+                age: document.getElementById('p_age').value,
+                description: document.getElementById('p_desc').value,
+                timestamp: serverTimestamp()
+            });
+            
+            showToast();
+            document.getElementById('bookingForm').reset();
+        } catch (e) { console.error(e); }
+    }
+
+    function showToast() {
+        const t = document.getElementById('toast');
+        t.className = "show";
+        setTimeout(() => { t.className = ""; }, 3000);
+    }
+</script>
+
+<script>
+    // حوار الباسورد hamza لما تدوس على اللوجو
+    function checkAdmin() {
+        const pass = prompt("Enter Admin Password:");
+        if (pass === "hamza") {
+            window.location.href = "admin.html";
+        } else {
+            alert("Wrong Password!");
+        }
+    }
+
+    // Scroll Animation
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('v'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.r').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
