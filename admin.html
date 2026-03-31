@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دخول الإدارة | مركز مصر</title>
+    <style>
+        body { font-family: sans-serif; background: #f8f4f0; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .login-box { background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; width: 320px; border-top: 5px solid #2d6a4f; }
+        h2 { color: #2d6a4f; margin-bottom: 25px; font-size: 24px; }
+        input { width: 100%; padding: 12px; margin-bottom: 20px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; outline: none; transition: 0.3s; }
+        input:focus { border-color: #2d6a4f; }
+        button { background: #2d6a4f; color: white; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; width: 100%; font-size: 18px; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #1b4332; }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>دخول الإدارة</h2>
+        <input type="password" id="pass" placeholder="أدخل كلمة المرور">
+        <button onclick="check()">دخول</button>
+    </div>
+
+    <script>
+        function check() {
+            var p = document.getElementById('pass').value;
+            if(p === "hamza") {
+                alert("أهلاً يا بشمهندس حمزة، جاري فتح لوحة التحكم...");
+            } else {
+                alert("كلمة المرور خطأ! حاول مرة أخرى.");
+            }
+        }
+    </script>
+</body>
+</html>
