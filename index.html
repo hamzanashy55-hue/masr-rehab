@@ -564,42 +564,48 @@ footer{
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  window.submitForm = async (event) => {
+window.submitForm = async (event) => {
     if (event) event.preventDefault();
-    const name = document.getElementById('f-name').value.trim();
-    const phone = document.getElementById('f-phone').value.trim();
-    const email = document.getElementById('f-email').value.trim() || "غير مسجل";
-    const branch = document.getElementById('f-branch').value;
-    const service = document.getElementById('f-service').value || "عام";
-    const date = document.getElementById('f-date').value || "غير محدد";
-    const time = document.getElementById('f-time').value || "غير محدد";
-    const notes = document.getElementById('f-notes').value.trim() || "لا يوجد";
 
+    // 1. سحب البيانات مع حماية (لو الخانة مش موجودة ميهنجش)
+    const getVal = (id) => document.getElementById(id) ? document.getElementById(id).value.trim() : "";
+
+    const name = getVal('f-name');
+    const phone = getVal('f-phone');
+    const email = getVal('f-email') || "غير مسجل";
+    const branch = getVal('f-branch');
+    const service = getVal('f-service') || "عام";
+    const notes = getVal('f-notes') || "لا يوجد";
+
+    // 2. التنبيه (زي إنشاء الحساب)
     if(!name || !phone || !branch) {
-        alert('⚠️ الاسم والموبايل والفرع حقول إجبارية!');
+        alert('⚠️ خطأ: يجب كتابة الاسم ورقم الهاتف واختيار الفرع!');
         return;
     }
 
     try {
+        console.log("جاري إرسال البيانات...");
+        // 3. الإرسال لـ Firebase
         await addDoc(collection(db, "appointments"), {
             patientName: name,
             patientPhone: phone,
             patientEmail: email,
             branch: branch,
             service: service,
-            prefDate: date,
-            prefTime: time,
             notes: notes,
-            status: "pending",
+            status: "pending", // فكرتك اللي اتفقنا عليها
             createdAt: serverTimestamp()
         });
-        alert("✅ تم إرسال طلبك للإدارة.. ستصلك رسالة بالتأكيد فور القبول.");
+
+        // 4. الرياكشن (التأكيد)
+        alert("✅ تم استلام طلبك بنجاح! سيتم مراجعته من قبل الإدارة.");
         window.location.reload();
-    } catch (e) { 
+
+    } catch (e) {
         console.error(e);
-        alert("خطأ في الاتصال"); 
+        alert("❌ فشل الاتصال بالسيرفر، حاول مرة أخرى.");
     }
-  };
+};
 
   // Nav scroll
   window.addEventListener('scroll',()=>{
