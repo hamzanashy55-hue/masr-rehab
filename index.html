@@ -638,7 +638,7 @@ footer{
         <div class="form-group"><label>الوقت المفضل</label><input type="time" id="f-time"></div>
       </div>
       <div class="form-group"><label>ملاحظات إضافية (اختياري)</label><textarea rows="3" id="f-notes" placeholder="اكتب هنا أي تفاصيل عن حالتك أو احتياجاتك الخاصة..."></textarea></div>
-      <button type="button" class="submit-btn" id="mainBookingBtn" onclick="submitForm()">✓ تأكيد الحجز</button>
+      <button type="button" class="submit-btn" onclick="submitForm(event)">تأكيد الحجز</button>
     </div>
   </div>
 </section>
@@ -706,12 +706,13 @@ footer{
   // 2. ميزة الـ Enter (لما المريض يدوس Enter يبعت البيانات)
   document.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
-      submitForm();
+   submitForm(e);
     }
   });
 
   // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
-window.submitForm = async function() {
+window.submitForm = async function(event) {
+    if (event) event.preventDefault();
     // 1. سحب البيانات من الخانات
     const name = document.getElementById('f-name').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
