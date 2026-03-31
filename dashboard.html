@@ -66,8 +66,8 @@
     onSnapshot(q, (snap) => {
         let rows = "";
         snap.forEach(doc => {
-            const d = doc.data();
-            const id = doc.id;
+           const pDate = d.prefDate || d.date || "لم يحدد";
+           const pTime = d.prefTime || d.time || "لم يحدد";
             const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleString('ar-EG') : "...";
             
             // لون الحالة (أصفر للانتظار، أخضر للمقبول)
@@ -76,11 +76,11 @@
 
             rows += `
                 <tr>
-                    <td><b style="cursor:pointer; color:#2d6a4f" onclick="showFullDetails('${id}', '${d.patientName}', '${d.patientPhone}', '${d.patientEmail}', '${d.branch}', '${d.service}', '${d.prefDate}', '${d.prefTime}', '${d.notes}')">${d.patientName}</b></td>
+                    <td><b style="cursor:pointer; color:#2d6a4f" onclick="showFullDetails('${id}', '${d.patientName}', '${d.patientPhone}', '${d.patientEmail}', '${d.branch}', '${d.service}', '${pDate}', '${pTime}', '${d.notes}')">${d.patientName}</b></td>
                     <td>${d.patientPhone}</td>
                     <td><span class="branch-tag" style="${statusStyle}">${statusText}</span></td>
                     <td>
-                        <button onclick="approveNow('${id}', '${d.patientPhone}', '${d.patientName}', '${d.prefDate}', '${d.prefTime}')" style="border:none; background:none; cursor:pointer; font-size:18px">✅</button>
+                        <button<button onclick="approveNow('${id}', '${d.patientPhone}', '${d.patientName}', '${pDate}', '${pTime}')" style="...">✅</button>
                         <button onclick="deleteNow('${id}')" style="border:none; background:none; cursor:pointer; font-size:18px">❌</button>
                     </td>
                 </tr>`;
