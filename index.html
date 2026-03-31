@@ -124,7 +124,6 @@ nav.scrolled{background:rgba(248,244,240,0.98);box-shadow:0 4px 24px rgba(0,0,0,
   border:1px solid rgba(255,255,255,0.08);
   border-radius:20px;overflow:hidden;
   max-width:540px;margin-inline:auto;
-  margin-bottom:44px;
 }
 .hero-stat{
   flex:1;padding:20px 16px;text-align:center;
@@ -391,7 +390,6 @@ footer{
   gap:40px;margin-bottom:48px;
 }
 @media(max-width:768px){.footer-top{grid-template-columns:1fr}}
-.footer-brand{}
 .footer-logo{font-size:20px;font-weight:900;color:#fff;margin-bottom:8px}
 .footer-logo-en{font-size:11px;letter-spacing:3px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:16px}
 .footer-desc{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.4);max-width:240px}
@@ -415,32 +413,10 @@ footer{
 .r[data-delay="3"]{transition-delay:0.3s}
 .r[data-delay="4"]{transition-delay:0.4s}
 .r[data-delay="5"]{transition-delay:0.5s}
-
-/* ===== TOAST ===== */
-.toast{
-  position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);
-  background:#fff;color:var(--dark);padding:16px 28px;border-radius:16px;
-  font-size:14px;font-weight:700;
-  box-shadow:0 16px 48px rgba(0,0,0,0.18);
-  z-index:9999;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
-  border-right:4px solid var(--green);
-  display:flex;align-items:center;gap:10px;
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:768px){
-  nav{padding:0 20px}
-  .nav-links{display:none}
-  section{padding:72px 20px}
-  .footer-top{grid-template-columns:1fr;gap:28px}
-  .footer-bottom{flex-direction:column;text-align:center}
-}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="admin.html">
     <div class="nav-logo-icon">
@@ -461,7 +437,6 @@ footer{
   <button class="nav-cta" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">احجز الآن</button>
 </nav>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
   <div class="hero-pattern"></div>
@@ -490,12 +465,10 @@ footer{
   </div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
   <div class="container">
     <p class="section-label r">خدماتنا</p>
     <h2 class="section-title r">تخصصات علاجية متكاملة</h2>
-    <p class="section-sub r">نقدم 9 تخصصات علاجية بأعلى معايير الجودة لتلبية احتياجات كل مريض</p>
     <div class="services-grid">
       <div class="service-card r" data-delay="1"><div class="service-icon">🧠</div><h3>تأهيل الأعصاب</h3><p>برامج متخصصة لتأهيل إصابات الجهاز العصبي والجلطات الدماغية</p></div>
       <div class="service-card r" data-delay="2"><div class="service-icon">👶</div><h3>علاج الأطفال</h3><p>رعاية شاملة لأطفال الاحتياجات الخاصة والتطور الحركي</p></div>
@@ -510,93 +483,16 @@ footer{
   </div>
 </section>
 
-<!-- WHY -->
-<section id="why">
-  <div class="container">
-    <p class="section-label r">لماذا نحن</p>
-    <h2 class="section-title r">مميزات الشبكة</h2>
-    <p class="section-sub r">ما يميز سلسلة مراكزنا عن غيرها من مراكز العلاج الطبيعي</p>
-    <div class="why-grid">
-      <div class="why-item r" data-delay="1"><div class="why-num">١</div><div><h4>فريق طبي متعدد التخصصات</h4><p>أطباء ومعالجون من أعلى المستويات في مجالات الأعصاب والأطفال والنطق</p></div></div>
-      <div class="why-item r" data-delay="2"><div class="why-num">٢</div><div><h4>تقنيات علاج حديثة</h4><p>أحدث أجهزة وتقنيات العلاج الطبيعي المعتمدة عالمياً</p></div></div>
-      <div class="why-item r" data-delay="3"><div class="why-num">٣</div><div><h4>انتشار إقليمي واسع</h4><p>فروع في مصر وليبيا والجزائر والسعودية لخدمة أكبر عدد من المرضى</p></div></div>
-      <div class="why-item r" data-delay="4"><div class="why-num">٤</div><div><h4>برامج تأهيل شخصية</h4><p>كل مريض له خطة علاجية مصممة خصيصاً لحالته ومتابعة مستمرة</p></div></div>
-      <div class="why-item r" data-delay="1"><div class="why-num">٥</div><div><h4>متابعة مستمرة</h4><p>نتابع تقدم المريض بانتظام ونعدّل الخطة العلاجية لضمان أفضل نتيجة</p></div></div>
-      <div class="why-item r" data-delay="2"><div class="why-num">٦</div><div><h4>بيئة مريحة وآمنة</h4><p>بيئة علاجية مصممة بعناية لراحة المرضى وذويهم خلال جلسات العلاج</p></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- TEAM -->
-<section id="team" style="background:#fff">
-  <div class="container">
-    <p class="section-label r">الفريق الطبي</p>
-    <h2 class="section-title r">نخبة من المتخصصين</h2>
-    <p class="section-sub r">يقود العلاج في مراكزنا أطباء حاصلون على أعلى الدرجات العلمية والخبرات الميدانية</p>
-    <div class="team-grid">
-      <div class="team-card r" data-delay="1">
-        <div class="team-avatar">م</div>
-        <h3>د. محمد عبدالحليم</h3>
-        <span class="team-role">مدير السلسلة</span>
-        <span>استشاري العلاج الطبيعي — متخصص في تأهيل مرضى الأعصاب والأطفال</span>
-      </div>
-      <div class="team-card r" data-delay="2">
-        <div class="team-avatar">أ</div>
-        <h3>د. أسامة عرابي</h3>
-        <span class="team-role">أخصائي أعصاب</span>
-        <span>خبرة واسعة في تأهيل إصابات الجهاز العصبي والجلطات الدماغية</span>
-      </div>
-      <div class="team-card r" data-delay="3">
-        <div class="team-avatar">م</div>
-        <h3>د. محمد أبو شال</h3>
-        <span class="team-role">أخصائي أطفال</span>
-        <span>متخصص في تأهيل الأطفال ذوي الاحتياجات الخاصة والتطور الحركي</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BRANCHES -->
-<section id="branches">
-  <div class="container">
-    <p class="section-label r">فروعنا</p>
-    <h2 class="section-title r">انتشار إقليمي في 4 دول</h2>
-    <p class="section-sub r">اختر الدولة لعرض الفروع المتاحة وتفاصيل كل مركز</p>
-    <div class="branches-tabs r">
-      <button class="tab-btn active" onclick="showBranch('eg',this)">🇪🇬 مصر</button>
-      <button class="tab-btn" onclick="showBranch('ly',this)">🇱🇾 ليبيا</button>
-      <button class="tab-btn" onclick="showBranch('dz',this)">🇩🇿 الجزائر</button>
-      <button class="tab-btn" onclick="showBranch('sa',this)">🇸🇦 السعودية</button>
-    </div>
-    <div id="branch-eg" class="branch-panel active">
-      <div class="branch-card"><div class="branch-flag">🏙️</div><h4>فرع أكتوبر الحصري</h4><p>مدينة 6 أكتوبر — منطقة الحصري</p><span class="branch-tag">EG</span></div>
-      <div class="branch-card"><div class="branch-flag">🌳</div><h4>فرع حدائق أكتوبر</h4><p>مدينة 6 أكتوبر — حدائق أكتوبر</p><span class="branch-tag">EG</span></div>
-    </div>
-    <div id="branch-ly" class="branch-panel">
-      <div class="branch-card"><div class="branch-flag">🏛️</div><h4>فرع غريان</h4><p>ليبيا — مدينة غريان</p><span class="branch-tag">LY</span></div>
-    </div>
-    <div id="branch-dz" class="branch-panel">
-      <div class="branch-card"><div class="branch-flag">🏜️</div><h4>فرع واد سوف</h4><p>الجزائر — واد سوف</p><span class="branch-tag">DZ</span></div>
-      <div class="branch-card"><div class="branch-flag">🕌</div><h4>فرع قسطنطينة</h4><p>الجزائر — قسطنطينة</p><span class="branch-tag">DZ</span></div>
-      <div class="branch-card"><div class="branch-flag">🌊</div><h4>فرع وهران</h4><p>الجزائر — وهران</p><span class="branch-tag">DZ</span></div>
-    </div>
-    <div id="branch-sa" class="branch-panel">
-      <div class="branch-card"><div class="branch-flag">🛢️</div><h4>فرع الدمام</h4><p>المملكة العربية السعودية — الدمام</p><span class="branch-tag">SA</span></div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOKING -->
 <section id="booking">
   <div class="container">
     <p class="section-label r">احجز موعدك</p>
     <h2 class="section-title r">نموذج الحجز</h2>
-    <p class="section-sub r">احجز موعدك الآن في أقرب فرع إليك — سنتواصل معك لتأكيد الموعد</p>
     <div class="booking-form r">
+      <div class="form-group"><label>البريد الإلكتروني (اختياري)</label><input type="email" id="f-email" placeholder="example@gmail.com"></div>
       <div class="form-row">
-       <div class="form-group"><label>البريد الإلكتروني (اختياري)</label><input type="email" id="f-email" placeholder="example@gmail.com"></div>
-       <div class="form-group"><label>الاسم الكامل</label><input type="text" id="f-name" placeholder="اسمك هنا" required></div>
-       <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="+20 xxxxxxxxx" required></div>
+        <div class="form-group"><label>الاسم الكامل</label><input type="text" id="f-name" placeholder="اسمك هنا" required></div>
+        <div class="form-group"><label>رقم الهاتف</label><input type="tel" id="f-phone" placeholder="+20 xxxxxxxxx" required></div>
+      </div>
       <div class="form-group">
         <label>الدولة والفرع</label>
         <select id="f-branch">
@@ -643,51 +539,16 @@ footer{
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-logo">مراكز مصر للعلاج الطبيعي</div>
-        <div class="footer-logo-en">Masrrehab</div>
-        <p class="footer-desc">سلسلة مراكز متخصصة في تأهيل مرضى الأعصاب والأطفال ذوي الاحتياجات الخاصة — موجودون في 4 دول عربية</p>
-      </div>
-      <div class="footer-col">
-        <h5>روابط سريعة</h5>
-        <ul>
-          <li><a href="#services">الخدمات والتخصصات</a></li>
-          <li><a href="#why">لماذا نحن</a></li>
-          <li><a href="#team">الفريق الطبي</a></li>
-          <li><a href="#branches">فروعنا</a></li>
-          <li><a href="#booking">احجز موعد</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>الفروع</h5>
-        <ul>
-          <li><a href="#">🇪🇬 مصر — أكتوبر</a></li>
-          <li><a href="#">🇱🇾 ليبيا — غريان</a></li>
-          <li><a href="#">🇩🇿 الجزائر — 3 فروع</a></li>
-          <li><a href="#">🇸🇦 السعودية — الدمام</a></li>
-        </ul>
-      </div>
-    </div>
-    <hr class="footer-divider">
     <div class="footer-bottom">
       <span>© 2025 مراكز مصر للعلاج الطبيعي — جميع الحقوق محفوظة</span>
-      <span>صُنع بـ <span class="footer-heart">♥</span> لخدمة المرضى</span>
+      <span>صُنع بـ <span style="color:var(--green-light)">♥</span> لخدمة المرضى</span>
     </div>
   </div>
 </footer>
 
-<!-- TOAST -->
-<div class="toast" id="toast">
-  <span>✅</span>
-  <span>تم استلام طلب حجزك! سنتواصل معك قريباً لتأكيد الموعد</span>
-</div>
-
 <script type="module">
-  // 1. إعدادات السيرفر (Firebase)
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
   import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
@@ -703,15 +564,7 @@ footer{
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // 2. ميزة الـ Enter (لما المريض يدوس Enter يبعت البيانات)
-  document.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-   submitForm(e);
-    }
-  });
-
-  // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
-window.submitForm = async (event) => {
+  window.submitForm = async (event) => {
     if (event) event.preventDefault();
     const name = document.getElementById('f-name').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
@@ -737,46 +590,23 @@ window.submitForm = async (event) => {
             prefDate: date,
             prefTime: time,
             notes: notes,
-            status: "pending", // الحالة الافتراضية
+            status: "pending",
             createdAt: serverTimestamp()
         });
         alert("✅ تم إرسال طلبك للإدارة.. ستصلك رسالة بالتأكيد فور القبول.");
         window.location.reload();
-    } catch (e) { alert("خطأ في الاتصال"); }
-};
-
-    try {
-      // 3. الإرسال لـ Firebase
-      await addDoc(collection(db, "appointments"), {
-        patientName: name,
-        patientPhone: phone,
-        branch: branch,
-        service: service,
-        createdAt: serverTimestamp()
-      });
-
-      // 4. الرسالة والريفرش
-      alert("✅ تم استلام طلب حجزك بنجاح!");
-      window.location.reload();
-
-    } catch (e) {
-      console.error(e);
-      alert("حدث خطأ في الاتصال بالسيرفر");
+    } catch (e) { 
+        console.error(e);
+        alert("خطأ في الاتصال"); 
     }
   };
 
-  // 5. الأكواد الأصلية بتاعتك (Nav scroll & Branches & Reveal)
+  // Nav scroll
   window.addEventListener('scroll',()=>{
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
   });
 
-  window.showBranch = function(id, btn){
-    document.querySelectorAll('.branch-panel').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.getElementById('branch-' + id).classList.add('active');
-    btn.classList.add('active');
-  };
-
+  // Reveal Logic
   const obs = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if(e.isIntersecting){
@@ -787,7 +617,5 @@ window.submitForm = async (event) => {
   }, {threshold: 0.1});
   document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
-</body>
-</html>
 </body>
 </html>
