@@ -638,7 +638,7 @@ footer{
         <div class="form-group"><label>الوقت المفضل</label><input type="time" id="f-time"></div>
       </div>
       <div class="form-group"><label>ملاحظات إضافية (اختياري)</label><textarea rows="3" id="f-notes" placeholder="اكتب هنا أي تفاصيل عن حالتك أو احتياجاتك الخاصة..."></textarea></div>
-      <button class="submit-btn" onclick="submitForm()">✓ تأكيد الحجز</button>
+      <button type="button" class="submit-btn" id="mainBookingBtn" onclick="submitForm()">✓ تأكيد الحجز</button>
     </div>
   </div>
 </section>
@@ -711,35 +711,35 @@ footer{
   });
 
   // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
-  window.submitForm = async function() {
+window.submitForm = async function() {
+    // 1. سحب البيانات من الخانات
     const name = document.getElementById('f-name').value.trim();
     const phone = document.getElementById('f-phone').value.trim();
     const branch = document.getElementById('f-branch').value;
+    const service = document.getElementById('f-service').value || "عام";
 
+    // 2. التأكد إن الخانات مش فاضية
     if(!name || !phone || !branch) {
-      alert('⚠️ من فضلك اكتب اسمك ورقم هاتفك واختر الفرع');
+      alert('⚠️ من فضلك اكتب الاسم ورقم الهاتف واختر الفرع');
       return;
     }
 
     try {
+      // 3. الإرسال لـ Firebase
       await addDoc(collection(db, "appointments"), {
         patientName: name,
         patientPhone: phone,
         branch: branch,
-        service: document.getElementById('f-service').value,
+        service: service,
         createdAt: serverTimestamp()
       });
 
-      // إظهار رسالة النجاح (Toast)
-      const t = document.getElementById('toast');
-      t.classList.add('show');
-      setTimeout(() => t.classList.remove('show'), 4000);
-      
-      // مسح البيانات بعد الحجز
-      document.getElementById('f-name').value='';
-      document.getElementById('f-phone').value='';
-      document.getElementById('f-branch').value='';
+      // 4. الرسالة والريفرش
+      alert("✅ تم استلام طلب حجزك بنجاح!");
+      window.location.reload();
+
     } catch (e) {
+      console.error(e);
       alert("حدث خطأ في الاتصال بالسيرفر");
     }
   };
