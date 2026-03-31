@@ -686,45 +686,101 @@ footer{
   <span>تم استلام طلب حجزك! سنتواصل معك قريباً لتأكيد الموعد</span>
 </div>
 
-<script>
-// Nav scroll
-window.addEventListener('scroll',()=>{
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);
-});
+<script type="module">
+  // 1. إعدادات السيرفر (Firebase)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-// Branches tabs
-function showBranch(id,btn){
-  document.querySelectorAll('.branch-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('branch-'+id).classList.add('active');
-  btn.classList.add('active');
-}
+  const firebaseConfig = {
+    apiKey: "AIzaSyCogxrENYLFS-sWKdJGQ39WKbYKfxS3GkM",
+    authDomain: "masr-rehab.firebaseapp.com",
+    projectId: "masr-rehab",
+    storageBucket: "masr-rehab.firebasestorage.app",
+    messagingSenderId: "803513512222",
+    appId: "1:803513512222:web:430fcb908eba84e92c190f"
+  };
 
-// Form submit
-function submitForm(){
-  const name=document.getElementById('f-name').value.trim();
-  const phone=document.getElementById('f-phone').value.trim();
-  const branch=document.getElementById('f-branch').value;
-  if(!name||!phone||!branch){
-    alert('⚠️ من فضلك اكتب اسمك ورقم هاتفك واختر الفرع');return;
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // 2. ميزة الـ Enter (لما المريض يدوس Enter يبعت البيانات)
+  document.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+      submitForm();
+    }
+  });
+
+  // 3. ميزة الباسورد (لما تدوس على اللوجو يطلب hamza)
+  const logo = document.querySelector('.nav-logo');
+  if(logo) {
+    logo.onclick = function(e) {
+      e.preventDefault();
+      const password = prompt("من فضلك أدخل كلمة المرور للدخول لصفحة البيانات:");
+      if (password === "hamza") {
+        window.location.href = "admin.html";
+      } else {
+        alert("كلمة المرور غير صحيحة!");
+      }
+    };
   }
-  const t=document.getElementById('toast');
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),4000);
-  document.getElementById('f-name').value='';
-  document.getElementById('f-phone').value='';
-  document.getElementById('f-branch').value='';
-  document.getElementById('f-service').value='';
-  document.getElementById('f-date').value='';
-  document.getElementById('f-time').value='';
-  document.getElementById('f-notes').value='';
-}
 
-// Scroll reveal
-const obs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('show');obs.unobserve(e.target);}});
-},{threshold:0.1});
-document.querySelectorAll('.r').forEach(el=>obs.observe(el));
+  // 4. وظيفة إرسال البيانات (submitForm) المعدلة لـ Firebase
+  window.submitForm = async function() {
+    const name = document.getElementById('f-name').value.trim();
+    const phone = document.getElementById('f-phone').value.trim();
+    const branch = document.getElementById('f-branch').value;
+
+    if(!name || !phone || !branch) {
+      alert('⚠️ من فضلك اكتب اسمك ورقم هاتفك واختر الفرع');
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "appointments"), {
+        patientName: name,
+        patientPhone: phone,
+        branch: branch,
+        service: document.getElementById('f-service').value,
+        createdAt: serverTimestamp()
+      });
+
+      // إظهار رسالة النجاح (Toast)
+      const t = document.getElementById('toast');
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 4000);
+      
+      // مسح البيانات بعد الحجز
+      document.getElementById('f-name').value='';
+      document.getElementById('f-phone').value='';
+      document.getElementById('f-branch').value='';
+    } catch (e) {
+      alert("حدث خطأ في الاتصال بالسيرفر");
+    }
+  };
+
+  // 5. الأكواد الأصلية بتاعتك (Nav scroll & Branches & Reveal)
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  window.showBranch = function(id, btn){
+    document.querySelectorAll('.branch-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('branch-' + id).classList.add('active');
+    btn.classList.add('active');
+  };
+
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('show');
+        obs.unobserve(e.target);
+      }
+    });
+  }, {threshold: 0.1});
+  document.querySelectorAll('.r').forEach(el => obs.observe(el));
 </script>
+</body>
+</html>
 </body>
 </html>
